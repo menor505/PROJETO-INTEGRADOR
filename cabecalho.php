@@ -15,14 +15,15 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
 
 <body class="corpo">
     <header class="cabecalho">
-
-        <a href="index.php" class="logo">
-            <img class="img" src="./comeketo-logo.svg" alt="fantasma">
-            <p class="a">quem come quieto come sempre!</p>
-        </a>
-
         <div class="meio">
-            <a class="a" href="index.php">inicio</a>
+          <a href="produtos.php"><img src="comeketo-logo.svg" alt="fantasma comeketo"></a>
+           <a class="a1" href="carda">PEÇA JÁ</a>
+            
+            
+        </div>
+        <div class="meio">
+            
+            <a class="a" href="index.php">INÍCIO</a>
         </div>
         <nav class="navegacao">
 
