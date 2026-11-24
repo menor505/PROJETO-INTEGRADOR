@@ -16,8 +16,8 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
 <body class="corpo">
     <header class="cabecalho">
         <div class="meio">
-          <a href="produtos.php"><img src="comeketo-logo.svg" alt="fantasma comeketo"></a>
-           <a class="a1" href="carda">PEÇA JÁ</a>
+          <a href="index.php"><img class="img" src="/imagens/comeketo-logo.svg" alt="fantasma comeketo"></a>
+           <a class="a1" href="produtos.php">PEÇA JÁ</a>
             
             
         </div>
@@ -27,20 +27,21 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
         </div>
         <nav class="navegacao">
 
-            <a href="produtos.php" class="a">Cardápio</a>
+    <a href="produtos.php" class="a">Cardápio</a>
 
-            <?php if (isset($_SESSION['usuario_id']) && $_SESSION["tipo"] === "admin"): ?>
-                <a href="editar.php" class="a">admin</a>
-            <?php endif; ?>
+    <?php if (isset($_SESSION['id']) and $_SESSION['tipo'] === 'admin'): ?>
+        <a href="editar.php" class="a">admin</a>
+    <?php endif; ?>
 
-            <?php if (isset($_SESSION["usuario_id"])): ?>
-                <a href="logout.php" class="a">sair</a>
-            <?php else: ?>
-                <a href="cadastro.php" class="a">Cadastre-se</a>
-                <a href="login.php" class="a">Entrar</a>
-            <?php endif; ?>
+    <?php if (isset($_SESSION['id'])): ?>
+        <a href="logout.php" class="a">Sair</a>
+        <a href="carrinho.php" class="a">Carrinho (<?= count($_SESSION['carrinho'] ?? []) ?>)</a>
+    <?php else: ?>
+        <a href="cadastro.php" class="a">Cadastre-se</a>
+        <a href="login.php" class="a">Entrar</a>
+    <?php endif; ?>
 
-        </nav>
+</nav>
     </header>
 </body>
 

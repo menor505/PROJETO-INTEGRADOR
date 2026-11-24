@@ -41,7 +41,7 @@ include "cabecalho.php";
 ?>
 <main class="cadastro">
     <section class="msgcd">
-        <h3>Comece a pedir criando a sua conta!</h3>
+        <h3>Começe a pedir criando a sua conta!</h3>
         <small>Crie uma conta para ter uma experiência melhor no site.</small>
     </section>
 
@@ -50,10 +50,14 @@ include "cabecalho.php";
         echo "<p>$mensagem</p>";
     }
     ?>
-    <form method="post">
+    <form action="cadastro.php" class="form" method="post">
         <input type="text" name="nome" placeholder="Nome">
         <input type="email" name="email" placeholder="E-mail">
-        <input type="password" name="senha" placeholder="Senha (mínimo 8 caracteres)">
-        <button type="submit">Criar conta</button>
+        <input type="password" name="senha" minlength="8" required placeholder="Senha (mínimo 8 caracteres)">
+        <button class="botao" type="submit">Criar conta</button>
     </form>
+    <p>Já tem uma conta?</p>
+    <a href="login.php">Fazer Login</a>
 </main>
+<?php include("rodape.php");
+?>

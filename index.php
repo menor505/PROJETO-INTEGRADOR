@@ -11,5 +11,11 @@ $resultado = mysqli_query($conexao, $sql);
 <p>Lanches e bebidas autorais com tradição e ingredientes especiais!</p>
 </section>
 <a href="produtos.php">Ver nosso Cardápio</a> <small>mais de 10000+ entregas em Curitiba</small>
-<img class="img" src="./comeketo-logo.svg" alt="fantasma come keto">
 </main>
+
+
+
+
+
+
+<?php include("rodape.php");
