@@ -4,75 +4,76 @@ exigir_login();
 
 require("conexao.php");
 
-if (!isset($_SESSION['carrinho'])) {
-    $_SESSION['carrinho'] = [];
+// adicionar produto (vem do formulário do produtos.php)
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['acao'] ?? '') === 'adicionar') {
+    $id = (int) $_POST['id'];
+    $quantidade = (int) $_POST['quantidade'];
+
+    if ($quantidade < 1) {
+        $quantidade = 1;
+    }
+
+    if (isset($_SESSION['carrinho'][$id])) {
+        $_SESSION['carrinho'][$id] += $quantidade;
+    } else {
+        $_SESSION['carrinho'][$id] = $quantidade;
+    }
+
+    $_SESSION['aviso'] = "Produto adicionado ao carrinho!";
+
+    // volta para a página do cardápio (mantendo a categoria escolhida)
+    $voltar = $_SERVER['HTTP_REFERER'] ?? 'produtos.php';
+    header("Location: $voltar");
+    exit;
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $id = (int) $_POST['id'];
-
-    if ($_POST['acao'] == 'adicionar') {
-        $quantidade = (int) $_POST['quantidade'];
-
-        if (isset($_SESSION['carrinho'][$id])) {
-            $_SESSION['carrinho'][$id] += $quantidade;
-        } else {
-            $_SESSION['carrinho'][$id] = $quantidade;
-        }
-    }
-
-    if ($_POST['acao'] == 'remover') {
-        unset($_SESSION['carrinho'][$id]);
-    }
-
+// remover produto
+if (isset($_GET['remover'])) {
+    unset($_SESSION['carrinho'][(int) $_GET['remover']]);
     header("Location: carrinho.php");
     exit;
 }
 
 include("cabecalho.php");
+$total = 0;
 ?>
 
-<main class="cardapio">
-    <h2 class="titulo-pagina">Meu Carrinho</h2>
+<main class="editar">
+    <section class="msgcd">
+        <h3>Meu Carrinho</h3>
+    </section>
 
-    <?php if (count($_SESSION['carrinho']) == 0) { ?>
-        <p class="vazio">Seu carrinho está vazio.</p>
-    <?php } else { ?>
-
-        <table class="tabela-carrinho">
-            <tr>
-                <th>Produto</th>
-                <th>Qtd</th>
-                <th>Subtotal</th>
-                <th></th>
-            </tr>
-
+    <?php if (empty($_SESSION['carrinho'])): ?>
+    <div class="carrinho-vazio">
+        <div class="vazio-emoji">🛒</div>
+        <h3>Seu carrinho está vazio</h3>
+        <p>Que tal pedir um lanche gostoso? Escolha no cardápio e adicione aqui.</p>
+        <a class="botao" href="produtos.php">Ver cardápio</a>
+    </div>
+<?php else: ?>
+        <?php foreach ($_SESSION['carrinho'] as $produto_id => $qtd): ?>
             <?php
-            $total = 0;
-            foreach ($_SESSION['carrinho'] as $id => $quantidade) {
-                $resultado = mysqli_query($conexao, "SELECT nome, preco FROM produtos WHERE id = $id");
-                $p = mysqli_fetch_assoc($resultado);
-                $subtotal = $p['preco'] * $quantidade;
-                $total = $total + $subtotal;
+            $r = mysqli_query($conexao, "SELECT nome, preco FROM produtos WHERE id = " . (int) $produto_id);
+            $produto = mysqli_fetch_assoc($r);
+            if (!$produto) {
+                continue;
+            }
+            $subtotal = $produto['preco'] * $qtd;
+            $total += $subtotal;
             ?>
-                <tr>
-                    <td><?= $p['nome'] ?></td>
-                    <td><?= $quantidade ?></td>
-                    <td>R$ <?= number_format($subtotal, 2, ',', '.') ?></td>
-                    <td>
-                        <form method="post">
-                            <input type="hidden" name="acao" value="remover">
-                            <input type="hidden" name="id" value="<?= $id ?>">
-                            <button class="btn-remover" type="submit">Remover</button>
-                        </form>
-                    </td>
-                </tr>
-            <?php } ?>
-        </table>
+            <div class="produto-linha">
+                <span><?= htmlspecialchars($produto['nome']) ?> (x<?= $qtd ?>)</span>
+                <span>R$ <?= number_format($subtotal, 2, ',', '.') ?></span>
+                <a class="botao botao-excluir" href="carrinho.php?remover=<?= $produto_id ?>">Remover</a>
+            </div>
+        <?php endforeach; ?>
 
-        <p class="total">Total: R$ <?= number_format($total, 2, ',', '.') ?></p>
+        <h3>Total: R$ <?= number_format($total, 2, ',', '.') ?></h3>
 
-    <?php } ?>
+        <form action="finalizar.php" method="post">
+            <button class="botao" type="submit">Finalizar pedido</button>
+        </form>
+    <?php endif; ?>
 </main>
 
 <?php include("rodape.php"); ?>

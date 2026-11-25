@@ -34,8 +34,9 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
     <?php endif; ?>
 
     <?php if (isset($_SESSION['id'])): ?>
-        <a href="logout.php" class="a">Sair</a>
+        <a href="pedidos.php" class="a">Pedidos</a>
         <a href="carrinho.php" class="a">Carrinho (<?= count($_SESSION['carrinho'] ?? []) ?>)</a>
+        <a href="logout.php" class="a">Sair</a>
     <?php else: ?>
         <a href="cadastro.php" class="a">Cadastre-se</a>
         <a href="login.php" class="a">Entrar</a>

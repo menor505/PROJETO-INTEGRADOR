@@ -16,3 +16,4 @@ function exigir_admin() {
         exit;
     }
 }
+$categorias = ['lanches', 'bebidas', 'acompanhamentos', 'variantes'];

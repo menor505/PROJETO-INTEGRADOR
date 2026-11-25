@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['tipo'] = $usuario['tipo'];
 
         if ($usuario['tipo'] === 'admin') {
-            header("Location: admin.php");
+            header("Location: editar.php");
         } else {
             header("Location: produtos.php");
         }
