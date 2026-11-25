@@ -1,7 +1,8 @@
 <?php
+// pega as funcoes que eu criei por exemplo exigir adm pq esta pagina é so para adm
 require_once("funcoes.php");
 exigir_admin();
-
+//usa o conexao pra se conectar pro banco 
 require("conexao.php");
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -12,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // foto (opcional)
     $imagem = '';
-    if (isset($_FILES['foto']) && $_FILES['foto']['error'] === 0) {
+    if (isset($_FILES['foto']) and $_FILES['foto']['error'] === 0) {
         $ext = strtolower(pathinfo($_FILES['foto']['name'], PATHINFO_EXTENSION));
 
         if (in_array($ext, ['jpg', 'jpeg', 'png', 'webp'])) {

@@ -31,11 +31,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($acao == 'excluir') {
         $id = (int) $_POST['id'];
-        mysqli_query($conexao, "DELETE FROM produtos WHERE id = $id");
-    }
+        $pedidos = mysqli_query($conexao, "SELECT id FROM itens_pedido WHERE produto_id = $id LIMIT 1");
 
-    header("Location: editar.php");
-    exit;
+        if (mysqli_num_rows($pedidos) == 0) {
+            mysqli_query($conexao, "DELETE FROM produtos WHERE id = $id");
+        }
+    }
 }
 
 $produtos = mysqli_query($conexao, "SELECT * FROM produtos ORDER BY id");
@@ -67,7 +68,7 @@ include("cabecalho.php");
             <input class="campo" type="text" name="categoria" value="<?= htmlspecialchars($p['categoria']) ?>" required>
             <button class="botao" type="submit" name="acao" value="editar">Salvar</button>
             <button class="btn-remover" type="submit" name="acao" value="excluir"
-                    onclick="return confirm('Excluir este produto?')">Excluir</button>
+                onclick="return confirm('Excluir este produto?')">Excluir</button>
         </form>
     <?php } ?>
 </main>
