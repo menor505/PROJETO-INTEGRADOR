@@ -3,13 +3,15 @@
    ADICIONAR.PHP - cadastrar produto novo (só admin)
 
    1. exigir_admin(): só admin entra.
-   2. Pega nome, preço, categoria e descrição do formulário.
+   2. Pega nome, preço, categoria e descrição do formulário, e o id do
+      admin logado ($_SESSION['id']) para saber quem cadastrou o produto.
    3. Upload da foto:
       - confere se veio arquivo sem erro;
       - aceita só as extensões jpg, jpeg, png e webp;
       - renomeia com time() (segundos atuais) para o nome nunca repetir;
       - move_uploaded_file() salva a foto na pasta imagens/.
-   4. INSERT INTO produtos e volta para o painel (editar.php).
+   4. INSERT INTO produtos (junto com o usuario_id do admin) e volta
+      para o painel (editar.php).
    5. HTML: o formulário usa enctype="multipart/form-data", que é obrigatório
       para enviar arquivos.
 */
@@ -23,6 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $preco = (float) $_POST['preco'];
     $categoria = mysqli_real_escape_string($conexao, $_POST['categoria']);
     $descricao = mysqli_real_escape_string($conexao, $_POST['descricao']);
+    $usuario_id = (int) $_SESSION['id'];
 
     $imagem = '';
     if (isset($_FILES['foto']) and $_FILES['foto']['error'] === 0) {
@@ -34,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    mysqli_query($conexao, "INSERT INTO produtos (nome, preco, categoria, descricao, imagem) VALUES ('$nome', $preco, '$categoria', '$descricao', '$imagem')");
+    mysqli_query($conexao, "INSERT INTO produtos (nome, preco, categoria, descricao, imagem, usuario_id) VALUES ('$nome', $preco, '$categoria', '$descricao', '$imagem', $usuario_id)");
     header("Location: editar.php");
     exit;
 }
