@@ -5,7 +5,7 @@ exigir_login();
 require("conexao.php");
 
 // adicionar produto (vem do formulário do produtos.php)
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['acao'] ?? '') === 'adicionar') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' and ($_POST['acao'] ?? '') === 'adicionar') {
     $id = (int) $_POST['id'];
     $quantidade = (int) $_POST['quantidade'];
 

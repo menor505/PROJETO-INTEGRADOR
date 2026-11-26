@@ -12,7 +12,7 @@ function exigir_login() {
 function exigir_admin() {
     exigir_login(); // primeiro confere se está logado
     if ($_SESSION['tipo'] !== 'admin') {
-        header("Location: produtos.php"); // logado, mas nao é admin
+        header("Location: produtos.php"); // logad o mas nao é admin
         exit;
     }
 }
