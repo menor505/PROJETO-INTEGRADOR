@@ -1,4 +1,16 @@
 <?php
+/*
+   INDEX.PHP - página inicial
+
+   1. Inclui o cabeçalho e a conexão com o banco.
+   2. SELECT ... LIMIT 3: pega os 3 primeiros produtos para a seção
+      "Os queridinhos da casa".
+   3. Lado esquerdo: texto de chamada, botão "Ver nosso Cardápio" e os
+      3 passinhos (Escolha, Monte, Receba).
+   4. Lado direito (<aside>): um while passa pelos 3 produtos e mostra foto,
+      nome e preço. number_format() deixa o preço no formato brasileiro (24,90).
+*/
+
 include("cabecalho.php");
 require("conexao.php");
 $resultado = mysqli_query($conexao, "SELECT * FROM produtos ORDER BY id LIMIT 3");

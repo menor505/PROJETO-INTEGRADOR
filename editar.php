@@ -1,4 +1,17 @@
 <?php
+/*
+   EDITAR.PHP - painel do admin (lista e edita produtos)
+
+   1. exigir_admin(): só admin entra.
+   2. Salvar (POST): UPDATE no produto com nome, preço, categoria e descrição.
+   3. Lista: cada produto vira um formulário editável na própria linha.
+      O <select> de categoria já vem marcando a categoria atual (selected).
+   4. Botão Excluir: link para excluir.php com confirm() ("tem certeza?").
+   5. Se a URL tiver ?erro=em_pedido, avisa que o produto não pode ser
+      excluído porque já aparece em pedidos.
+   6. Botão "+ Novo produto" leva para o adicionar.php.
+*/
+
 require_once("funcoes.php");
 exigir_admin();
 

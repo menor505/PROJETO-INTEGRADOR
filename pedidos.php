@@ -1,4 +1,19 @@
 <?php
+/*
+   PEDIDOS.PHP - lista de pedidos
+
+   1. Admin mudando o status (POST): só funciona se for admin.
+      Faz o UPDATE do status (cortado em 20 caracteres com substr).
+   2. Qual lista mostrar:
+      - admin vê TODOS os pedidos;
+      - cliente vê só os dele (WHERE usuario_id = id da sessão);
+      - o JOIN com usuarios traz o nome de quem fez o pedido.
+   3. Cada pedido mostra número, nome, data (d/m/Y H:i) e total.
+      O admin ganha um campo para editar o status; o cliente só vê o status.
+   4. Itens do pedido: outro SELECT com JOIN em produtos mostra
+      "2x X-Burguer", "1x Refrigerante" etc.
+*/
+
 require_once("funcoes.php");
 exigir_login();
 
@@ -7,7 +22,6 @@ require("conexao.php");
 $id = (int) $_SESSION['id'];
 $eh_admin = ($_SESSION['tipo'] === 'admin');
 
-// só o admin pode mudar o status
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $eh_admin) {
     $pedido_id = (int) $_POST['pedido_id'];
     $status = mysqli_real_escape_string($conexao, substr($_POST['status'], 0, 20));

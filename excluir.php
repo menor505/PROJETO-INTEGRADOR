@@ -1,4 +1,13 @@
 <?php
+/*
+   EXCLUIR.PHP - apagar produto (só admin)
+
+   1. exigir_admin(): só admin entra.
+   2. Confere se o produto aparece em itens_pedido. Se aparecer, NÃO apaga
+      (a chave estrangeira do banco não deixa) e volta com ?erro=em_pedido.
+   3. Se não aparecer em nenhum pedido, faz o DELETE.
+*/
+
 require_once("funcoes.php");
 exigir_admin();
 
@@ -6,7 +15,6 @@ require("conexao.php");
 
 $id = (int) $_GET['id'];
 
-// se o produto já aparece em algum pedido, o banco não deixa apagar (chave estrangeira)
 $pedidos = mysqli_query($conexao, "SELECT id FROM itens_pedido WHERE produto_id = $id LIMIT 1");
 
 if (mysqli_num_rows($pedidos) > 0) {

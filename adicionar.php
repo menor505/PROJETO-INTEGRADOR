@@ -1,8 +1,21 @@
 <?php
-// pega as funcoes que eu criei por exemplo exigir adm pq esta pagina é so para adm
+/*
+   ADICIONAR.PHP - cadastrar produto novo (só admin)
+
+   1. exigir_admin(): só admin entra.
+   2. Pega nome, preço, categoria e descrição do formulário.
+   3. Upload da foto:
+      - confere se veio arquivo sem erro;
+      - aceita só as extensões jpg, jpeg, png e webp;
+      - renomeia com time() (segundos atuais) para o nome nunca repetir;
+      - move_uploaded_file() salva a foto na pasta imagens/.
+   4. INSERT INTO produtos e volta para o painel (editar.php).
+   5. HTML: o formulário usa enctype="multipart/form-data", que é obrigatório
+      para enviar arquivos.
+*/
+
 require_once("funcoes.php");
 exigir_admin();
-//usa o conexao pra se conectar pro banco 
 require("conexao.php");
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -11,7 +24,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $categoria = mysqli_real_escape_string($conexao, $_POST['categoria']);
     $descricao = mysqli_real_escape_string($conexao, $_POST['descricao']);
 
-    // foto (opcional)
     $imagem = '';
     if (isset($_FILES['foto']) and $_FILES['foto']['error'] === 0) {
         $ext = strtolower(pathinfo($_FILES['foto']['name'], PATHINFO_EXTENSION));

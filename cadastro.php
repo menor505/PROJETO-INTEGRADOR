@@ -1,4 +1,16 @@
 <?php
+/*
+   CADASTRO.PHP - criar conta
+
+   1. Se o formulário foi enviado (POST), pega nome, email e senha.
+   2. Validações (os problemas vão para o array $erro):
+      nome vazio, email inválido (filter_var) e senha com menos de 8 caracteres.
+   3. Confere no banco se o email já está cadastrado.
+   4. Se não tiver nenhum erro: criptografa a senha com password_hash(),
+      faz o INSERT na tabela usuarios e manda para o login.
+   5. HTML: mostra os erros (foreach) e o formulário de cadastro.
+*/
+
 require("conexao.php");
 $erro = [];
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

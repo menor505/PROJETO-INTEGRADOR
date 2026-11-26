@@ -1,10 +1,27 @@
 <?php
+/*
+   CARRINHO.PHP - carrinho de compras
+
+   O carrinho NÃO fica no banco, fica na sessão no formato
+   [id_do_produto => quantidade]. Ex.: [1 => 2, 4 => 1].
+
+   1. Adicionar (POST vindo do cardápio): se o produto já está no carrinho,
+      soma a quantidade. Se não, coloca. Depois volta para a página de onde
+      veio (HTTP_REFERER), mantendo a categoria escolhida.
+   2. Remover (?remover=id): tira o produto do carrinho com unset().
+   3. Mostrar:
+      - carrinho vazio: mostra a tela do carrinho vazio com botão pro cardápio;
+      - senão: busca nome e preço de cada item no banco, calcula o subtotal
+        (preço x quantidade) e soma no total;
+      - se o produto foi apagado pelo admin, o continue pula ele.
+   4. Botão "Finalizar pedido" envia para o finalizar.php.
+*/
+
 require_once("funcoes.php");
 exigir_login();
 
 require("conexao.php");
 
-// adicionar produto (vem do formulário do produtos.php)
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['acao'] ?? '') === 'adicionar') {
     $id = (int) $_POST['id'];
     $quantidade = (int) $_POST['quantidade'];
@@ -21,13 +38,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['acao'] ?? '') === 'adicion
 
     $_SESSION['aviso'] = "Produto adicionado ao carrinho!";
 
-    // volta para a página do cardápio (mantendo a categoria escolhida)
     $voltar = $_SERVER['HTTP_REFERER'] ?? 'produtos.php';
     header("Location: $voltar");
     exit;
 }
 
-// remover produto
 if (isset($_GET['remover'])) {
     unset($_SESSION['carrinho'][(int) $_GET['remover']]);
     header("Location: carrinho.php");

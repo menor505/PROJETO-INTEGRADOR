@@ -1,10 +1,23 @@
 <?php
+/*
+   PRODUTOS.PHP - cardápio
+
+   1. exigir_login(): só entra quem está logado.
+   2. Filtro de categoria: se a URL tiver ?categoria=bebidas, filtra com WHERE.
+      Se não tiver, mostra todos os produtos.
+   3. SELECT DISTINCT categoria: pega as categorias que existem no banco
+      para montar os botões de filtro.
+   4. Aviso verde ("Produto adicionado ao carrinho!"): mostra uma vez e apaga
+      da sessão (mensagem flash).
+   5. Cards dos produtos: cada card tem um formulário que envia
+      acao=adicionar, o id e a quantidade para o carrinho.php.
+*/
+
 require_once("funcoes.php");
 exigir_login();
 
 require("conexao.php");
 
-// categoria escolhida na URL (vazio = todos)
 $categoria = $_GET['categoria'] ?? '';
 
 if ($categoria == '') {
@@ -16,7 +29,6 @@ if ($categoria == '') {
 
 $resultado = mysqli_query($conexao, $sql);
 
-// categorias para os botões
 $lista = mysqli_query($conexao, "SELECT DISTINCT categoria FROM produtos");
 
 include("cabecalho.php");

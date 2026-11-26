@@ -1,4 +1,17 @@
 <?php
+/*
+   LOGIN.PHP - entrar na conta
+
+   1. Busca o usuário pelo email.
+   2. password_verify() compara a senha digitada com o hash salvo no banco.
+   3. Se estiver certa, guarda na sessão o id e o tipo do usuário.
+      É assim que o site "lembra" quem está logado entre as páginas.
+   4. Cookie "Lembrar meu e-mail": se marcado, salva o email por 30 dias
+      (2592000 segundos). Se desmarcado, apaga o cookie.
+   5. Redireciona: admin vai para editar.php e cliente vai para produtos.php.
+   6. HTML: o formulário já vem com o email preenchido se o cookie existir.
+*/
+
 session_start();
 require("conexao.php");
 
@@ -13,7 +26,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['id'] = $usuario['id'];
         $_SESSION['tipo'] = $usuario['tipo'];
 
-        // cookie: lembrar o e-mail por 30 dias
         if (isset($_POST['lembrar'])) {
             setcookie("email_lembrado", $usuario['email'], time() + 2592000);
         } else {
