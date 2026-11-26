@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $resultado = mysqli_query($conexao, "SELECT * FROM usuarios WHERE email = '$email'");
     $usuario = mysqli_fetch_assoc($resultado);
 
-    if ($usuario && password_verify($senha, $usuario['senha'])) {
+    if ($usuario and password_verify($senha, $usuario['senha'])) {
         $_SESSION['id'] = $usuario['id'];
         $_SESSION['tipo'] = $usuario['tipo'];
 
