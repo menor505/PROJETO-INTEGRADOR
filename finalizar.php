@@ -16,8 +16,21 @@ $precos = [];
 foreach ($_SESSION['carrinho'] as $produto_id => $qtd) {
     $r = mysqli_query($conexao, "SELECT preco FROM produtos WHERE id = " . (int) $produto_id);
     $produto = mysqli_fetch_assoc($r);
+
+    // produto foi apagado depois de ir pro carrinho: tira do carrinho
+    if (!$produto) {
+        unset($_SESSION['carrinho'][$produto_id]);
+        continue;
+    }
+
     $precos[$produto_id] = $produto['preco'];
     $total += $produto['preco'] * $qtd;
+}
+
+// se não sobrou nada no carrinho, volta pra ele
+if (empty($_SESSION['carrinho'])) {
+    header("Location: carrinho.php");
+    exit;
 }
 
 // cria o pedido
