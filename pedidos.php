@@ -7,11 +7,7 @@ require("conexao.php");
 $id = (int) $_SESSION['id'];
 $eh_admin = ($_SESSION['tipo'] === 'admin');
 
-// lista de status possíveis
-
 // só o admin pode mudar o status
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && $eh_admin) {
-    // só o admin pode mudar o status
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $eh_admin) {
     $pedido_id = (int) $_POST['pedido_id'];
     $status = mysqli_real_escape_string($conexao, substr($_POST['status'], 0, 20));
@@ -20,7 +16,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $eh_admin) {
 
     header("Location: pedidos.php");
     exit;
-}
 }
 
 if ($eh_admin) {
@@ -48,17 +43,11 @@ include("cabecalho.php");
             <?php if ($eh_admin): ?>
                 <form method="post" class="form-status">
                     <input type="hidden" name="pedido_id" value="<?= $pedido['id'] ?>">
-                    <select name="status">
-                        <?php foreach ($lista_status as $s): ?>
-                            <option value="<?= $s ?>" <?= $s == $pedido['status'] ? 'selected' : '' ?>>
-                                <?= ucfirst($s) ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
+                    <input type="text" name="status" maxlength="20" value="<?= htmlspecialchars($pedido['status']) ?>" required>
                     <button class="botao" type="submit">Salvar</button>
                 </form>
             <?php else: ?>
-                <span class="status">Status: <?= ucfirst($pedido['status']) ?></span>
+                <span class="status">Status: <?= htmlspecialchars($pedido['status']) ?></span>
             <?php endif; ?>
 
             <ul>

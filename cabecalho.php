@@ -44,6 +44,3 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
 
 </nav>
     </header>
-</body>
-
-</html>

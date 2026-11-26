@@ -45,11 +45,9 @@ include "cabecalho.php";
         <small>Crie uma conta para ter uma experiência melhor no site.</small>
     </section>
 
-    <?php
-    foreach ($erro as $mensagem) {
-        echo "<p>$mensagem</p>";
-    }
-    ?>
+    <?php foreach ($erro as $mensagem): ?>
+        <p class="erro"><?= $mensagem ?></p>
+    <?php endforeach; ?>
     <form action="cadastro.php" class="form" method="post">
         <input type="text" name="nome" placeholder="Nome">
         <input type="email" name="email" placeholder="E-mail">

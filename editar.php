@@ -26,6 +26,10 @@ include("cabecalho.php");
         <h3>Editar Produtos</h3>
     </section>
 
+    <?php if (isset($_GET['erro']) && $_GET['erro'] === 'em_pedido'): ?>
+        <p class="erro">Esse produto não pode ser excluído porque já aparece em pedidos feitos.</p>
+    <?php endif; ?>
+
     <a href="adicionar.php" class="botao botao-novo">+ Novo produto</a>
 
     <?php while ($produto = mysqli_fetch_assoc($resultado)): ?>
