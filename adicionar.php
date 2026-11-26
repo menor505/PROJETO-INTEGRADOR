@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // foto (opcional)
     $imagem = '';
     if (isset($_FILES['foto']) and $_FILES['foto']['error'] === 0) {
-        $ext = strtolower(pathinfo($_FILES['foto']['name'], PATHINFO_EXTENSION));
+        $ext = strtolower(pathinfo($_FILES['foto']['name'], PATHINFO_EXTENSION)); //ele pega e ve o tipo da imagem transforma ela em minusculo pra validar
 
         if (in_array($ext, ['jpg', 'jpeg', 'png', 'webp'])) {
             $imagem = time() . "." . $ext;

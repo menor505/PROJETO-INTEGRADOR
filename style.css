@@ -1,7 +1,4 @@
-/* ==========================================
-   COMEKETO - style.css
-   ========================================== */
-
+/* root pra salvar os bagulhos pra fica mais facil */
 :root {
     --laranja: #f58220;
     --laranja-escuro: #d96a0b;
@@ -16,7 +13,7 @@
     --sombra-laranja: 0 6px 18px rgba(217, 107, 0, 0.12);
 }
 
-/* ---------- Base ---------- */
+
 * {
     margin: 0;
     padding: 0;
@@ -36,7 +33,7 @@ a {
     text-decoration: none;
 }
 
-/* ---------- Cabeçalho ---------- */
+/*  cabecalho */
 .cabecalho {
     background: var(--laranja);
     padding: 10px 30px;
@@ -67,7 +64,7 @@ a {
     transform: rotate(-8deg) scale(1.08);
 }
 
-/* botão "PEÇA JÁ" */
+/* botão peca ja */
 .a1 {
     background: var(--branco);
     color: var(--laranja-escuro);
@@ -104,7 +101,7 @@ a {
     background: rgba(255, 255, 255, 0.25);
 }
 
-/* ---------- Rodapé ---------- */
+/*  rodape fds */
 .rodape {
     background: var(--texto);
     color: var(--creme);
@@ -113,7 +110,7 @@ a {
     font-size: 0.9rem;
 }
 
-/* ---------- Botão (usado em todo o site) ---------- */
+/*  Botão praticamnete todos */
 .botao {
     background: var(--laranja);
     color: var(--branco);
@@ -136,7 +133,7 @@ a {
     color: var(--erro);
 }
 
-/* ---------- Página inicial (index.php) ---------- */
+/*  Página inicial index.php  */
 .visual {
     flex: 1;
     display: flex;
@@ -186,7 +183,7 @@ a {
     margin: 0 auto;
 }
 
-/* botão "Ver nosso Cardápio" */
+/* botao Ver nosso Cardápio */
 .inicio-texto > a {
     display: inline-block;
     background: var(--laranja);
@@ -269,7 +266,7 @@ a {
     margin-bottom: 6px;
 }
 
-/* ---------- Login, cadastro e adicionar produto ---------- */
+/*  Login cadastro e adicionar produto  */
 .cadastro {
     flex: 1;
     width: 100%;
@@ -330,7 +327,7 @@ a {
     font-size: 0.95rem;
 }
 
-/* ---------- Cardápio (produtos.php) ---------- */
+/*  Cardápio (produtos.php)  */
 .cardapio {
     flex: 1;
     width: 100%;
@@ -436,7 +433,7 @@ a {
     text-align: center;
 }
 
-/* ---------- Páginas de lista: editar, carrinho e pedidos ---------- */
+/*  Páginas de lista editar carrinho e pedidos  */
 .editar {
     max-width: 820px;
     margin: 40px auto;

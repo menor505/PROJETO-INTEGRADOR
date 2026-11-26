@@ -12,12 +12,12 @@ if (empty($_SESSION['carrinho'])) {
 $usuario_id = (int) $_SESSION['id'];
 $total = 0;
 $precos = [];
-// pega o preço de cada produto e calcula o total
+// pega o preço de cada produto e calcula 
 foreach ($_SESSION['carrinho'] as $produto_id => $qtd) {
     $r = mysqli_query($conexao, "SELECT preco FROM produtos WHERE id = " . (int) $produto_id);
     $produto = mysqli_fetch_assoc($r);
 
-    // produto foi apagado depois de ir pro carrinho: tira do carrinho
+    // produto foi apagado depois de ir pro carrinho tira do carrinho
     if (!$produto) {
         unset($_SESSION['carrinho'][$produto_id]);
         continue;
@@ -27,7 +27,7 @@ foreach ($_SESSION['carrinho'] as $produto_id => $qtd) {
     $total += $produto['preco'] * $qtd;
 }
 
-// se não sobrou nada no carrinho, volta pra ele
+// se não sobrou nada no carrinho volta pra ele
 if (empty($_SESSION['carrinho'])) {
     header("Location: carrinho.php");
     exit;

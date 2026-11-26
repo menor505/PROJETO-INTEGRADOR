@@ -6,9 +6,9 @@ require("conexao.php");
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id = (int) $_POST['id'];
-    $nome = mysqli_real_escape_string($conexao, $_POST['nome']);
+    $nome = mysqli_real_escape_string($conexao, $_POST['nome']); // esse myqsli scape lala protege de caracter especial pra nao dar rui tipo " 
     $preco = (float) $_POST['preco'];
-    $categoria = mysqli_real_escape_string($conexao, $_POST['categoria']);
+    $categoria = mysqli_real_escape_string($conexao, $_POST['categoria']); 
     $descricao = mysqli_real_escape_string($conexao, $_POST['descricao']);
 
     mysqli_query($conexao, "UPDATE produtos SET nome = '$nome', preco = $preco, categoria = '$categoria', descricao = '$descricao' WHERE id = $id");
@@ -26,7 +26,7 @@ include("cabecalho.php");
         <h3>Editar Produtos</h3>
     </section>
 
-    <?php if (isset($_GET['erro']) && $_GET['erro'] === 'em_pedido'): ?>
+    <?php if (isset($_GET['erro']) and $_GET['erro'] === 'em_pedido'): ?>
         <p class="erro">Esse produto não pode ser excluído porque já aparece em pedidos feitos.</p>
     <?php endif; ?>
 
